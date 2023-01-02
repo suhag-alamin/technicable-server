@@ -26,7 +26,13 @@ const run = async () => {
     await client.connect();
     const database = client.db("technicable");
     const blogCollection = database.collection("blogs");
-    console.log("connected to database");
+
+    // get all blogs
+    app.get("/blogs", async (req, res) => {
+      const cursor = blogCollection.find({});
+      const blogs = await cursor.toArray();
+      res.send(blogs);
+    });
   } finally {
     // await client.close();
   }
