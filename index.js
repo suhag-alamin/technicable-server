@@ -56,6 +56,19 @@ const run = async () => {
       const result = await blogCollection.deleteOne(query);
       res.send(result);
     });
+    // update blog
+    app.put("/blog/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedBlog = req.body;
+      const filter = { _id: ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          updatedBlog,
+        },
+      };
+      const result = await blogCollection.updateOne(filter, updateDoc);
+      res.json(result);
+    });
   } finally {
     // await client.close();
   }
