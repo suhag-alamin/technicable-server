@@ -60,13 +60,23 @@ const run = async () => {
     app.put("/blog/:id", async (req, res) => {
       const id = req.params.id;
       const updatedBlog = req.body;
+
       const filter = { _id: ObjectId(id) };
+      console.log(filter);
+      const options = { upsert: true };
       const updateDoc = {
         $set: {
-          updatedBlog,
+          title: updatedBlog.title,
+          img: updatedBlog.img,
+          author: updatedBlog.author,
+          category: updatedBlog.category,
+          timeToRead: updatedBlog.timeToRead,
+          creditLink: updatedBlog.creditLink,
+          tags: updatedBlog.tags,
+          description: updatedBlog.description,
         },
       };
-      const result = await blogCollection.updateOne(filter, updateDoc);
+      const result = await blogCollection.updateOne(filter, updateDoc, options);
       res.json(result);
     });
   } finally {
