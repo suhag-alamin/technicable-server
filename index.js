@@ -40,6 +40,14 @@ const run = async () => {
       const blog = await blogCollection.findOne(query);
       res.send(blog);
     });
+
+    // add blog
+    app.post("/blog", async (req, res) => {
+      const blog = req.body;
+      console.log(blog);
+      const result = await blogCollection.insertOne(blog);
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
