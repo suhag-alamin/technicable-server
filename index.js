@@ -48,6 +48,14 @@ const run = async () => {
       const result = await blogCollection.insertOne(blog);
       res.send(result);
     });
+
+    // delete blog
+    app.delete("/blog/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await blogCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
